@@ -3,13 +3,11 @@ import { highlight, languages } from 'prismjs'
 import 'prismjs/components/prism-clike'
 import 'prismjs/components/prism-javascript'
 import 'dracula-prism/dist/css/dracula-prism.css'
-import { useNumeric } from './hooks/useNumeric'
 import { useEditor } from './hooks/useEditor'
 import classes from './App.module.css'
 
 function App() {
   const { value, setValue, outputValue } = useEditor()
-  useNumeric()
 
   return (
     <div className={classes.wrapper}>
