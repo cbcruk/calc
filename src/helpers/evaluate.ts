@@ -1,4 +1,5 @@
 import { math } from './math'
+import { aliasIdentifiers, type AliasMap } from './identifiers'
 
 export type LineResult = {
   /** The original source line, unchanged. */
@@ -64,10 +65,14 @@ function formatResult(value: unknown): string {
  *   2 + 3        // -> 5   (line1)
  *   line1 * 10   // -> 50
  *
+ * Non-ASCII names (e.g. Korean `월급`) are aliased to ASCII before evaluation,
+ * so `월급 = 3000000` works just like an ASCII variable.
+ *
  * Blank lines, comments, and free text produce empty output instead of an error.
  */
 export function evaluateLines(source: string): LineResult[] {
   const scope: Record<string, unknown> = {}
+  const aliasMap: AliasMap = new Map()
   const lines = source.split('\n')
 
   return lines.map((line, index) => {
@@ -76,7 +81,8 @@ export function evaluateLines(source: string): LineResult[] {
     }
 
     try {
-      const result = math.evaluate(normalizeExpression(line), scope)
+      const prepared = normalizeExpression(aliasIdentifiers(line, aliasMap))
+      const result = math.evaluate(prepared, scope)
 
       if (result !== undefined) {
         scope[`line${index + 1}`] = result

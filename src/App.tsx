@@ -8,9 +8,9 @@ import { useEditor } from './hooks/useEditor'
 import classes from './App.module.css'
 
 const PLACEHOLDER = [
-  'price = 100',
-  'tax = 10% of price',
-  'price + tax',
+  '월급 = 3000000',
+  '저축 = 30% of 월급',
+  '월급 - 저축',
   '',
   '3 km to m',
   '10 USD to KRW',
