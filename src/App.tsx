@@ -8,10 +8,11 @@ import classes from './App.module.css'
 
 const PLACEHOLDER = [
   'price = 100',
-  'tax = price * 0.1',
+  'tax = 10% of price',
   'price + tax',
   '',
   '3 km to m',
+  '10 USD to KRW',
   'line1 * 2',
 ].join('\n')
 

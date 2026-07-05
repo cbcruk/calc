@@ -1,4 +1,4 @@
-import * as math from 'mathjs'
+import { math } from './math'
 
 export type LineResult = {
   /** The original source line, unchanged. */
@@ -15,6 +15,16 @@ const COMMENT_MARKERS = ['#', '//']
 function isCommentOrBlank(line: string): boolean {
   const trimmed = line.trim()
   return trimmed === '' || COMMENT_MARKERS.some((m) => trimmed.startsWith(m))
+}
+
+/**
+ * Rewrite natural-language phrases mathjs doesn't understand into equivalent
+ * expressions. Currently: "<percentage> of <expr>" -> "<percentage> * <expr>",
+ * so `20% of 50` evaluates to 10. Only "of" directly following a percentage is
+ * translated, to avoid mangling prose lines like "list of items".
+ */
+function normalizeExpression(line: string): string {
+  return line.replace(/(%)\s+of\s+/gi, '$1 * ')
 }
 
 function formatResult(value: unknown): string {
@@ -62,7 +72,7 @@ export function evaluateLines(source: string): LineResult[] {
     }
 
     try {
-      const result = math.evaluate(line, scope)
+      const result = math.evaluate(normalizeExpression(line), scope)
 
       if (result !== undefined) {
         scope[`line${index + 1}`] = result
