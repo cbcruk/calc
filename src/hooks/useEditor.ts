@@ -5,12 +5,23 @@ export function useEditor() {
   const [value, setValue] = useState('')
 
   const results: LineResult[] = useMemo(() => evaluateLines(value), [value])
-  const outputValue = results.map((result) => result.output).join('\n')
+
+  const { sum, hasNumbers } = useMemo(() => {
+    const numbers = results
+      .map((result) => result.numericValue)
+      .filter((n): n is number => n !== null)
+
+    return {
+      sum: numbers.reduce((total, n) => total + n, 0),
+      hasNumbers: numbers.length > 0,
+    }
+  }, [results])
 
   return {
     value,
     setValue,
     results,
-    outputValue,
+    sum,
+    hasNumbers,
   }
 }

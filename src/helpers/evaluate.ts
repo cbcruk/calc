@@ -5,6 +5,8 @@ export type LineResult = {
   input: string
   /** Formatted result, or empty string for blank / non-math lines. */
   output: string
+  /** Raw numeric result when the line evaluates to a plain number, else null. */
+  numericValue: number | null
   /** True when the line looked like an expression but failed to evaluate. */
   isError: boolean
 }
@@ -38,8 +40,10 @@ function formatResult(value: unknown): string {
   }
 
   try {
-    // precision trims floating-point noise like 0.1 + 0.2 -> 0.30000000000000004
-    return math.format(value, { precision: 14 })
+    // Round to 6 decimals: tames long division tails (e.g. currency) and also
+    // clears floating-point noise like 0.1 + 0.2 -> 0.30000000000000004.
+    // The function form applies to plain numbers, units, and matrices alike.
+    return math.format(value, (n) => String(Math.round(n * 1e6) / 1e6))
   } catch {
     return String(value)
   }
@@ -68,7 +72,7 @@ export function evaluateLines(source: string): LineResult[] {
 
   return lines.map((line, index) => {
     if (isCommentOrBlank(line)) {
-      return { input: line, output: '', isError: false }
+      return { input: line, output: '', numericValue: null, isError: false }
     }
 
     try {
@@ -78,10 +82,18 @@ export function evaluateLines(source: string): LineResult[] {
         scope[`line${index + 1}`] = result
       }
 
-      return { input: line, output: formatResult(result), isError: false }
+      const numericValue =
+        typeof result === 'number' && Number.isFinite(result) ? result : null
+
+      return {
+        input: line,
+        output: formatResult(result),
+        numericValue,
+        isError: false,
+      }
     } catch {
       // Non-math prose (labels, notes) lands here too, so fail quietly.
-      return { input: line, output: '', isError: true }
+      return { input: line, output: '', numericValue: null, isError: true }
     }
   })
 }

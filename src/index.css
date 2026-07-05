@@ -6,12 +6,24 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background);
-  line-height: 1.625;
+  background-color: #282a36;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #f6f6f8;
+  }
 }
