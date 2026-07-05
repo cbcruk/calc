@@ -22,7 +22,7 @@ const sumFormatter = new Intl.NumberFormat(undefined, {
 })
 
 function App() {
-  const { value, setValue, results, sum, hasNumbers } = useEditor()
+  const { value, setValue, clear, results, sum, hasNumbers } = useEditor()
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
   async function copyResult(index: number, output: string) {
@@ -39,12 +39,19 @@ function App() {
     <div className={classes.app}>
       <header className={classes.header}>
         <span className={classes.brand}>계산기</span>
-        {hasNumbers && (
-          <span className={classes.sum}>
-            <span className={classes.sumLabel}>합계</span>
-            <span className={classes.sumValue}>{sumFormatter.format(sum)}</span>
-          </span>
-        )}
+        <div className={classes.headerRight}>
+          {hasNumbers && (
+            <span className={classes.sum}>
+              <span className={classes.sumLabel}>합계</span>
+              <span className={classes.sumValue}>{sumFormatter.format(sum)}</span>
+            </span>
+          )}
+          {value && (
+            <button type="button" className={classes.clear} onClick={clear}>
+              지우기
+            </button>
+          )}
+        </div>
       </header>
 
       <div className={classes.workspace}>

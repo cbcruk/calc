@@ -24,11 +24,33 @@
   color: #f8f8f2;
 }
 
+.headerRight {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .sum {
   display: inline-flex;
   align-items: baseline;
   gap: 8px;
   font-family: 'Fira Code', 'Fira Mono', monospace;
+}
+
+.clear {
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #6272a4;
+  background: transparent;
+  border: 1px solid #44475a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.12s ease, border-color 0.12s ease;
+}
+
+.clear:hover {
+  color: #ff5555;
+  border-color: #ff5555;
 }
 
 .sumLabel {
@@ -133,6 +155,16 @@
 
   .sumValue {
     color: #1a8f4a;
+  }
+
+  .clear {
+    color: #6b6b7b;
+    border-color: #d4d4de;
+  }
+
+  .clear:hover {
+    color: #d33;
+    border-color: #d33;
   }
 
   .editor {
