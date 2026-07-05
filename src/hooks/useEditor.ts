@@ -17,14 +17,23 @@ function loadInitialValue(): string {
 export function useEditor() {
   const [value, setValue] = useState<string>(loadInitialValue)
   const [evaluate, setEvaluate] = useState<EvaluateFn | null>(null)
+  const [ratesVersion, setRatesVersion] = useState(0)
 
   // Load the math engine (mathjs) lazily so it stays out of the initial bundle.
   // The editor starts empty, so it is ready well before the user types.
+  // Once loaded, refresh currency rates in the background and re-evaluate if
+  // they changed.
   useEffect(() => {
     let active = true
-    import('../helpers/evaluate').then((mod) => {
-      if (active) {
-        setEvaluate(() => mod.evaluateLines)
+    import('../helpers/evaluate').then(async (mod) => {
+      if (!active) {
+        return
+      }
+      setEvaluate(() => mod.evaluateLines)
+
+      const updated = await mod.refreshRates()
+      if (active && updated) {
+        setRatesVersion((version) => version + 1)
       }
     })
     return () => {
@@ -45,7 +54,8 @@ export function useEditor() {
 
   const results: LineResult[] = useMemo(
     () => (evaluate ? evaluate(value) : []),
-    [evaluate, value]
+    // ratesVersion forces a re-evaluation after live currency rates load.
+    [evaluate, value, ratesVersion]
   )
 
   const { sum, hasNumbers } = useMemo(() => {

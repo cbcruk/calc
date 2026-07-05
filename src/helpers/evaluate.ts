@@ -1,6 +1,8 @@
 import { math } from './math'
 import { aliasIdentifiers, type AliasMap } from './identifiers'
 
+export { refreshRates } from './math'
+
 export type LineResult = {
   /** The original source line, unchanged. */
   input: string
