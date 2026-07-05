@@ -1,18 +1,16 @@
-import { useState } from 'react'
-import { evaluate } from '../helpers/evaluate'
+import { useMemo, useState } from 'react'
+import { evaluateLines, type LineResult } from '../helpers/evaluate'
 
 export function useEditor() {
   const [value, setValue] = useState('')
-  const outputValue =
-    value &&
-    value
-      .split('\n')
-      .map((line) => evaluate(line))
-      .join('\n')
+
+  const results: LineResult[] = useMemo(() => evaluateLines(value), [value])
+  const outputValue = results.map((result) => result.output).join('\n')
 
   return {
     value,
     setValue,
+    results,
     outputValue,
   }
 }
