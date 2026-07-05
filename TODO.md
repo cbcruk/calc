@@ -29,13 +29,16 @@ calc 앱 되살리기 이후 이어갈 작업 목록입니다.
 - 추가 여지: prismjs도 지연 로드하거나, mathjs 함수 서브셋만 import해 총량
   자체를 더 줄이는 방향.
 
-## 4. 배포
+## 4. 배포 ✅ (완료)
 
-- **현재 상태**: Vercel 기준(.gitignore에 `.vercel`, `dist`).
-- **방향**:
-  - 최신 스택 기준으로 Vercel 재배포 설정 점검.
-  - 필요 시 GitHub Actions로 빌드/배포 자동화.
-  - 배포 후 라이트/다크, 모바일 뷰 동작 확인.
+- GitHub Pages + GitHub Actions로 배포(`.github/workflows/deploy.yml`).
+  `main`에 푸시되면 자동 빌드/배포.
+- 프로젝트 페이지 경로(`/calc/`)에 맞춰 `vite.config.js`의 `base`를 빌드
+  시에만 `/calc/`로 설정(dev는 `/`).
+- **최초 1회 수동 설정 필요**: 저장소 Settings → Pages → Build and
+  deployment → Source를 **GitHub Actions**로 지정.
+- 공개 주소: `https://cbcruk.github.io/calc/`
+- 커스텀 도메인을 붙이면 `base`를 `/`로 되돌려야 함.
 
 ## 기타 아이디어
 

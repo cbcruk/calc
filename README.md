@@ -3,6 +3,8 @@
 줄 단위로 식을 적으면 바로 결과를 계산해 주는 노트패드형 계산기입니다.
 [Soulver](https://soulver.app/) · [Numi](https://numi.app/)에서 영감을 받았습니다.
 
+**데모: https://cbcruk.github.io/calc/**
+
 ![스크린샷](docs/screenshot.png)
 
 ## 특징
