@@ -14,7 +14,7 @@ function App() {
       <Editor
         value={value}
         onValueChange={(value) => setValue(value)}
-        highlight={(value) => highlight(value, languages.js, 'ko')}
+        highlight={(value) => highlight(value, languages.js, 'javascript')}
         textareaId="App-textarea"
         padding={10}
         className={classes.editor}

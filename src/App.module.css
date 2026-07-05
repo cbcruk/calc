@@ -3,15 +3,15 @@
   height: 100vh;
 }
 
-.textarea {
-  outline: 0 !important;
-}
-
 .editor {
   flex: 1;
   font-family: '"Fira code", "Fira Mono", monospace';
-  fontsize: 16px;
+  font-size: 16px;
   color: #fff;
+}
+
+.editor textarea {
+  outline: 0 !important;
 }
 
 .output {
