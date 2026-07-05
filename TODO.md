@@ -19,14 +19,15 @@ calc 앱 되살리기 이후 이어갈 작업 목록입니다.
   - CORS 및 Vercel 배포 환경에서의 호출 가능 여부 확인 필요.
   - 조회 시각을 UI에 표시하면 신뢰도 향상.
 
-## 3. 번들 최적화
+## 3. 번들 최적화 ✅ (완료)
 
-- **현재 상태**: mathjs 전체를 불러와 번들이 약 891 kB(gzip 263 kB).
-- **방향**:
-  - mathjs를 필요한 함수만 import(`create` + 개별 함수)해 트리셰이킹.
-  - prismjs 컴포넌트 최소화.
-  - `build.rollupOptions.output.manualChunks`로 vendor 분리.
-  - 목표: 초기 번들 gzip 100 kB 내외.
+- mathjs(평가 모듈)를 `hooks/useEditor`에서 동적 import해 초기 번들에서 분리.
+  앱 셸이 먼저 뜨고 mathjs는 마운트 직후 비동기 로드됩니다.
+- React를 별도 vendor 청크로 분리(`vite.config.js`).
+- **결과**: 초기 차단 로드 gzip 약 263 kB → 약 76 kB. mathjs(gzip ~190 kB)는
+  지연 로드.
+- 추가 여지: prismjs도 지연 로드하거나, mathjs 함수 서브셋만 import해 총량
+  자체를 더 줄이는 방향.
 
 ## 4. 배포
 
