@@ -37,6 +37,17 @@
   font-family: 'Fira Code', 'Fira Mono', monospace;
 }
 
+.sumLabel {
+  font-size: 12px;
+  color: #6272a4;
+}
+
+.sumValue {
+  font-size: 15px;
+  font-weight: 600;
+  color: #50fa7b;
+}
+
 .clear {
   padding: 4px 10px;
   font-size: 12px;
@@ -53,89 +64,11 @@
   border-color: #ff5555;
 }
 
-.sumLabel {
-  font-size: 12px;
-  color: #6272a4;
-}
-
-.sumValue {
-  font-size: 15px;
-  font-weight: 600;
-  color: #50fa7b;
-}
-
-.workspace {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-}
-
-/* Shared type metrics so editor lines and result rows line up exactly. */
-.editor,
-.result,
-.resultEmpty {
-  font-family: 'Fira Code', 'Fira Mono', monospace;
-  font-size: 15px;
-  line-height: 24px;
-}
-
+/* The CodeMirror editor fills the space below the header. */
 .editor {
   flex: 1;
-  overflow: auto;
-  padding: 16px !important;
-  color: #f8f8f2;
-  caret-color: #f8f8f2;
-}
-
-.editor :global(textarea),
-.editor :global(pre) {
-  font-family: 'Fira Code', 'Fira Mono', monospace !important;
-  font-size: 15px !important;
-  line-height: 24px !important;
-  outline: none !important;
-}
-
-.results {
-  display: flex;
-  flex-direction: column;
-  width: 38%;
-  min-width: 160px;
-  overflow: auto;
-  padding: 16px 8px;
-  background-color: #21222c;
-  border-left: 1px solid #44475a;
-}
-
-.result,
-.resultEmpty {
-  display: block;
-  height: 24px;
-  padding: 0 8px;
-  text-align: right;
-  white-space: nowrap;
+  min-height: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.result {
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: #50fa7b;
-  cursor: pointer;
-  transition: background-color 0.12s ease;
-}
-
-.result:hover {
-  background-color: #44475a;
-}
-
-.result:active {
-  background-color: #6272a4;
-}
-
-.resultEmpty {
-  pointer-events: none;
 }
 
 @media (prefers-color-scheme: light) {
@@ -165,50 +98,5 @@
   .clear:hover {
     color: #d33;
     border-color: #d33;
-  }
-
-  .editor {
-    color: #1c1e26;
-    caret-color: #1c1e26;
-  }
-
-  /* dracula tokens are tuned for a dark canvas; retint for light readability. */
-  .editor :global(.token) {
-    color: #1c1e26;
-  }
-
-  .editor :global(.token.number) {
-    color: #0b6bcb;
-  }
-
-  .editor :global(.token.string) {
-    color: #1a8f4a;
-  }
-
-  .editor :global(.token.operator),
-  .editor :global(.token.keyword),
-  .editor :global(.token.punctuation) {
-    color: #8a2f9d;
-  }
-
-  .editor :global(.token.comment) {
-    color: #8a8a99;
-  }
-
-  .results {
-    background-color: #ffffff;
-    border-left-color: #e2e2ea;
-  }
-
-  .result {
-    color: #1a8f4a;
-  }
-
-  .result:hover {
-    background-color: #ececf2;
-  }
-
-  .result:active {
-    background-color: #dcdce6;
   }
 }
