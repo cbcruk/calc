@@ -31,6 +31,15 @@ export const calcTheme = EditorView.theme({
   '.cm-cursor': {
     borderLeftColor: 'var(--cm-fg)',
   },
+  // Float the (multi-line) placeholder out of flow so it doesn't inflate the
+  // empty first line's height — which otherwise stretches the caret.
+  '.cm-placeholder': {
+    position: 'absolute',
+    top: '0',
+    left: '16px',
+    color: 'var(--cm-comment)',
+    pointerEvents: 'none',
+  },
   '.cm-selectionBackground, &.cm-focused .cm-selectionBackground': {
     backgroundColor: 'var(--cm-selection)',
   },
